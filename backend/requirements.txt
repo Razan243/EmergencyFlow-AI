@@ -1,0 +1,8 @@
+gradio==6.29.0
+spaces==0.51.3
+torch>=2.8.0,<2.9.0
+transformers>=4.45
+sentencepiece>=0.2
+accelerate>=0.34
+PyPDF2>=3.0.1
+langgraph>=0.2
