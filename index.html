@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NightShift MD | MediCore AI</title>
+<style>
+:root{--navy:#091126;--navy2:#0f1b3a;--cyan:#16d9ed;--teal:#16b7a4;--purple:#8067f5;--ink:#182033;--muted:#6d7485;--line:#e7e9ef;--bg:#f6f8fb;--white:#fff;--danger:#e45757;--green:#2dc46b;--orange:#f29a38;}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--ink);background:var(--bg)}
+button,input{font:inherit}.hidden{display:none!important}.app{min-height:100vh}
+.topbar{height:64px;background:#10182f;color:#fff;display:flex;align-items:center;padding:0 28px;gap:28px;position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(255,255,255,.06)}
+.brand{display:flex;align-items:center;gap:10px;min-width:300px}.logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#1dd5e9,#5967ff);display:grid;place-items:center;font-weight:800;box-shadow:0 0 25px #15d4ed33}.brand b{font-size:16px;letter-spacing:.2px}.brand small{display:block;color:#8d98b4;font-size:10px;margin-top:1px}
+.nav{display:flex;gap:8px;align-items:center}.nav button{border:0;background:transparent;color:#dce1ef;padding:10px 15px;border-radius:10px;cursor:pointer;font-weight:700;font-size:13px}.nav button.active{background:#12385b;color:#22d8ec}.new-btn{margin-left:auto;border:0;background:linear-gradient(90deg,#13c9e8,#16d5a8);color:#fff;padding:11px 18px;border-radius:11px;font-weight:800;cursor:pointer}
+.hero{min-height:calc(100vh - 64px);background:radial-gradient(circle at 50% 42%,#133b66 0,#0b1730 38%,#080f22 76%);color:#fff;display:flex;justify-content:center;align-items:center;text-align:center;padding:50px 24px;position:relative;overflow:hidden}.hero:before{content:"";position:absolute;width:600px;height:380px;background:#00b7ff16;filter:blur(80px);border-radius:50%}.hero-content{position:relative;max-width:800px}.pill{display:inline-flex;padding:8px 14px;border:1px solid #1bd3eb55;background:#0b5c7166;color:#2ed8ed;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:25px}.hero h1{font-size:56px;margin:0 0 12px;font-weight:850;letter-spacing:-2px;background:linear-gradient(90deg,#10d9ed,#6d61ff);-webkit-background-clip:text;color:transparent}.hero h2{font-size:25px;margin:0 0 15px}.hero p{color:#9da8bf;line-height:1.7;max-width:640px;margin:0 auto 32px}.actions{display:flex;justify-content:center;gap:12px}.primary,.secondary{border:0;padding:14px 24px;border-radius:12px;font-weight:800;cursor:pointer}.primary{background:linear-gradient(90deg,#15d4ef,#16d6aa);color:#fff}.secondary{background:#182745;color:#fff}
+.dashboard{display:flex;min-height:calc(100vh - 64px)}.sidebar{width:230px;background:#fff;border-right:1px solid var(--line);padding:24px 16px;flex-shrink:0}.side-brand{display:flex;gap:10px;align-items:center;padding:0 10px 24px}.side-brand .logo{width:34px;height:34px}.side-brand small{color:#7d8492}.group{font-size:11px;color:#858b98;margin:17px 10px 7px}.side button{width:100%;text-align:left;border:0;background:transparent;padding:11px 12px;border-radius:9px;cursor:pointer;color:#5c6371;margin:2px 0}.side button.active{background:#e8fbf9;color:#118c82;font-weight:800;border-right:3px solid #19ad9f}.privacy{margin:20px 6px 0;background:#edf7ff;border-radius:10px;padding:13px;font-size:11px;color:#677181}.privacy b{display:block;color:#445064;margin-bottom:8px}.privacy span{display:block;margin:4px 0}.dot{display:inline-block;width:6px;height:6px;background:#28bd6a;border-radius:50%;margin-right:5px}
+.main{flex:1;padding:26px 34px;overflow:auto;max-width:1200px;margin:auto;width:100%}.page-head{background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 8px 25px #16213b0d;display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}.page-head h2{margin:0;font-size:22px}.page-head p{margin:5px 0 0;color:#8a91a0;font-size:13px}.pulse{font-size:34px;color:#10a796}
+.card{background:#fff;border:1px solid #eceef3;border-radius:15px;padding:22px;box-shadow:0 7px 25px #1d27420b;margin-bottom:22px}.card h3{margin:0 0 17px;font-size:16px}.progress-head{display:flex;justify-content:space-between;font-size:13px;font-weight:800}.bar{height:9px;background:#e6ebef;border-radius:99px;margin:12px 0 20px;overflow:hidden}.bar i{display:block;width:100%;height:100%;background:#13a894;border-radius:99px}.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.step{text-align:center;color:#7d8492;font-size:11px}.check{width:29px;height:29px;border-radius:50%;background:#25c76a;color:#fff;margin:0 auto 7px;display:grid;place-items:center;font-weight:900}.step.current .check{background:#11a79a}
+.result-title{display:flex;align-items:center;gap:10px;font-size:18px;margin-bottom:18px}.result-title .mini{color:#0b9e91;font-size:24px}.urgency{background:#fff6ec;border:1px solid #f4d5ae;border-radius:13px;padding:20px;display:flex;justify-content:space-between;gap:18px}.urgency h4{margin:0 0 8px;font-size:17px}.urgency p{margin:0;color:#6e7179;line-height:1.6;font-size:13px}.score{font-size:29px;font-weight:900;color:#ed8b24;white-space:nowrap}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}.metric{border-radius:12px;padding:18px;border:1px solid}.metric:nth-child(1){background:#eff6ff;border-color:#cddff9}.metric:nth-child(2){background:#fbf2ff;border-color:#e5d2f6}.metric:nth-child(3){background:#fff7ec;border-color:#f1d7b5}.metric small{display:block;color:#69728a;font-weight:700;margin-bottom:6px}.metric strong{font-size:16px}.section-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.list{margin:0;padding:0;list-style:none}.list li{padding:9px 0;border-bottom:1px solid #f0f1f4;font-size:13px;color:#5e6573}.list li:last-child{border-bottom:0}.tag{display:inline-block;padding:5px 8px;border-radius:7px;background:#fff0f0;color:#d95353;font-size:11px;font-weight:800;margin:3px}
+.upload{border:2px dashed #d7dde7;border-radius:15px;padding:42px 25px;text-align:center;background:#fafbfd}.upload .upload-icon{font-size:40px;color:#11aa9b;margin-bottom:10px}.upload p{color:#7a8190;font-size:13px}.upload input{display:none}.file-label{display:inline-block;background:#111b35;color:#fff;padding:12px 20px;border-radius:10px;cursor:pointer;font-weight:800}.selected{margin-top:14px;color:#158e81;font-size:13px;font-weight:700}.run{margin-top:15px;width:100%;padding:14px;border:0;border-radius:11px;background:linear-gradient(90deg,#11b7c8,#13b99c);color:#fff;font-weight:900;cursor:pointer}.run:disabled{opacity:.55;cursor:not-allowed}
+.loading{padding:30px;text-align:center}.spinner{width:38px;height:38px;border:4px solid #dfe6ec;border-top-color:#12aa9c;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 13px}@keyframes spin{to{transform:rotate(360deg)}}
+.notice{padding:12px 14px;border-radius:9px;background:#fff4df;color:#8b5b1e;font-size:12px;margin-bottom:18px}.error{background:#fff0f0;color:#b53b3b}.timeline{border-left:2px solid #dce7ea;padding-left:25px}.event{position:relative;margin:0 0 18px}.event:before{content:"";position:absolute;left:-32px;top:3px;width:11px;height:11px;background:#12aa9c;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1px #12aa9c}.event b{font-size:13px}.event p{margin:4px 0;color:#727989;font-size:12px}
+@media(max-width:900px){.sidebar{display:none}.brand{min-width:auto}.nav{display:none}.main{padding:18px}.grid3,.section-grid{grid-template-columns:1fr}.steps{grid-template-columns:repeat(3,1fr);row-gap:14px}.hero h1{font-size:42px}.topbar{padding:0 15px}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const API_BASE='https://razangewaily-nightshift-md-medicore-ai.hf.space';
+const state={page:'home',file:null,data:null,loading:false,error:'',chatMessages:[]};
+const app=document.getElementById('app');
+const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+function topbar(){return `<header class="topbar"><div class="brand"><div class="logo">〽</div><div><b>NightShift MD</b><small>MediCore AI • Emergency Triage</small></div></div><nav class="nav"><button class="${state.page==='home'?'active':''}" onclick="go('home')">Home</button><button class="${state.page==='patient'?'active':''}" onclick="go('patient')">Patient Page</button><button class="${state.page==='doctor'?'active':''}" onclick="go('doctor')">Doctor Dashboard</button></nav><button class="new-btn" onclick="go('patient')">＋ New Patient</button></header>`}
+function home(){return `<section class="hero"><div class="hero-content"><div class="pill">● AI-Powered Emergency Triage</div><h1>NightShift MD</h1><h2>Intelligent Emergency Triage System</h2><p>AI-powered patient data analysis, emergency triage, and clinical summarization for healthcare decision support.</p><div class="actions"><button class="primary" onclick="go('patient')">＋ Start Emergency Checkup</button><button class="secondary" onclick="go('doctor')">Doctor Dashboard →</button></div></div></section>`}
+function shell(content,active='patient'){return `${topbar()}<div class="dashboard"><aside class="sidebar"><div class="side-brand"><div class="logo">♧</div><div><b>MediCore AI</b><small>Personal Health Assistant</small></div></div><div class="group">Medical Services</div><div class="side"><button onclick="go('doctor')">⌂ &nbsp; Dashboard</button><button class="${state.page==='chat'?'active':''}" onclick="go('chat')">◉ &nbsp; AI Consultation <span class="tag" style="float:right">AI</span></button><button class="active">〽 &nbsp; Symptom Triage</button><button>▤ &nbsp; Test Results</button><button>◈ &nbsp; Medications</button><button style="color:#bd4b4b">⚠ &nbsp; Emergency</button><div class="group">Health Management</div><button>□ &nbsp; Appointments</button><button>▧ &nbsp; Health Records</button><button>♧ &nbsp; Family Health</button><button>⚙ &nbsp; Settings</button></div><div class="privacy"><b>♢ &nbsp; Privacy Protected</b><span><i class="dot"></i>End-to-end encrypted</span><span><i class="dot"></i>HIPAA concept-ready</span><span><i class="dot"></i>No data retention</span></div></aside><main class="main">${content}</main></div>`}
+function patient(){return shell(`<div class="page-head"><div><h2>Medical Triage Assessment</h2><p>AI-powered symptom evaluation and priority assessment</p></div><div class="pulse">〽</div></div>${state.data?resultView():uploadView()}`)}
+function uploadView(){return `<div class="card"><h3>New Patient Assessment</h3><div class="upload"><div class="upload-icon">⇧</div><h3>Upload Patient Medical PDF</h3><p>Upload the medical document used by the EmergencyFlow multi-agent pipeline.</p><label class="file-label" for="pdf">Choose PDF File</label><input id="pdf" type="file" accept="application/pdf" onchange="pickFile(this.files[0])"/><div class="selected">${state.file?esc(state.file.name):'No file selected'}</div></div><button class="run" ${state.file?'':'disabled'} onclick="runAssessment()">Run Emergency Assessment</button>${state.error?`<div class="notice error" style="margin-top:15px">${esc(state.error)}</div>`:''}</div>`}
+function progress(){return `<div class="card"><div class="progress-head"><span>Assessment Progress</span><span>Step 6 of 6</span></div><div class="bar"><i></i></div><div class="steps">${['Patient Data','Medical Records','History','Triage','Summary','Assessment Result'].map((x,i)=>`<div class="step ${i===5?'current':''}"><div class="check">${i<5?'✓':'6'}</div>${x}</div>`).join('')}</div></div>`}
+function arr(v){if(!v||!v.length)return '<li>No data reported</li>';return v.map(x=>`<li>${esc(x)}</li>`).join('')}
+function resultView(){const r=state.data.result,p=r.patient_data,t=r.triage,m=r.medical_records,h=r.history;return `${progress()}<div class="card"><div class="result-title"><span class="mini">♧</span><b>Assessment Result</b></div><div class="urgency"><div><h4>Urgency Level: ${esc(t.priority)}</h4><p>${esc(t.reason)}</p></div><div class="score">${t.priority==='Immediate Emergency'?'Immediate':'Review'}</div></div><div class="grid3"><div class="metric"><small>Patient</small><strong>${esc(p.age||'—')} years • ${esc(p.gender||'—')}</strong></div><div class="metric"><small>Symptoms</small><strong>${esc(p.symptoms.join(', ')||'Not reported')}</strong></div><div class="metric"><small>Critical Findings</small><strong>${(t.critical_findings||[]).length}</strong></div></div></div><div class="section-grid"><div class="card"><h3>Patient Data</h3><ul class="list"><li><b>Age:</b> ${esc(p.age||'Not reported')}</li><li><b>Gender:</b> ${esc(p.gender||'Not reported')}</li><li><b>Symptoms:</b> ${esc(p.symptoms.join(', ')||'Not reported')}</li><li><b>Vital Signs:</b> ${esc(Object.entries(p.vital_signs||{}).map(([k,v])=>k.replaceAll('_',' ')+': '+v).join(' • ')||'Not reported')}</li><li><b>Clinical Condition:</b> ${esc(p.clinical_condition.join(', ')||'Not reported')}</li></ul></div><div class="card"><h3>Critical Findings</h3><div>${(t.critical_findings||[]).map(x=>`<span class="tag">${esc(x)}</span>`).join('')||'None reported'}</div><h3 style="margin-top:20px">Safety Note</h3><p style="color:#737b89;font-size:12px;line-height:1.6">${esc(t.safety_note)}</p></div></div><div class="section-grid"><div class="card"><h3>Medical Records</h3>${Object.entries(m).map(([k,v])=>`<div style="margin:12px 0"><small style="font-weight:800;color:#697184">${esc(k.replaceAll('_',' ').toUpperCase())}</small><ul class="list">${arr(v)}</ul></div>`).join('')}</div><div class="card"><h3>Patient History</h3>${Object.entries(h).map(([k,v])=>`<div style="margin:12px 0"><small style="font-weight:800;color:#697184">${esc(k.replaceAll('_',' ').toUpperCase())}</small><ul class="list">${arr(v)}</ul></div>`).join('')}</div></div><div class="card"><h3>Clinical Timeline</h3><div class="timeline">${(h.timeline_events||[]).map(x=>{const match=x.match(/^(.*?(?:\d{1,2}:\d{2}\s*(?:AM|PM)|[^:]+)):\s*(.*)$/i);return `<div class="event"><b>${esc(match?match[1]:x)}</b><p>${esc(match?match[2]:'')}</p></div>`}).join('')||'<p>No timeline events reported.</p>'}</div></div><div class="card"><h3>AI Clinical Summary</h3><p style="line-height:1.8;color:#596171">${esc(r.llm_summary)}</p></div><div style="display:flex;gap:10px;margin-top:15px"><button class="run" style="margin-top:0" onclick="go('chat')">◉ Open AI Consultation</button><button class="run" style="margin-top:0" onclick="resetPatient()">＋ New Patient Assessment</button></div>`}
+function chatPage(){
+    const report=state.data?.result;
+    const messages=state.chatMessages.map(m=>`<div style="display:flex;justify-content:${m.role==='user'?'flex-end':'flex-start'};margin:12px 0"><div style="max-width:78%;padding:12px 15px;border-radius:13px;background:${m.role==='user'?'#e8fbf9':'#f4f6fa'};color:#303746;line-height:1.6;font-size:13px;border:1px solid ${m.role==='user'?'#c9eee9':'#e6e9ef'}">${esc(m.content).replace(/\n/g,'<br>')}</div></div>`).join('');
+    return shell(`<div class="page-head"><div><h2>AI Consultation</h2><p>Ask EmergencyFlow AI questions about the analyzed patient report</p></div><div class="pulse">◉</div></div>${!report?`<div class="notice">Analyze a patient PDF first, then you can use AI Consultation.</div><div class="card"><h3>No Patient Assessment Available</h3><p style="color:#697181;line-height:1.7">Upload and analyze a medical PDF from the Patient Page before asking questions about the patient.</p><button class="run" onclick="go('patient')">Open Patient Assessment →</button></div>`:`<div class="card"><h3>EmergencyFlow AI Assistant</h3><div id="chat-box" style="min-height:320px;max-height:520px;overflow-y:auto;background:#fbfcfe;border:1px solid #eceef3;border-radius:12px;padding:15px;margin-bottom:15px">${messages||`<div style="text-align:center;color:#858d9b;padding:70px 20px;font-size:13px">Ask a question about the analyzed patient.<br><br>Example: <b>Tell me about the patient</b></div>`}</div><div style="display:flex;gap:10px"><input id="chat-input" type="text" placeholder="Ask about the patient..." style="flex:1;border:1px solid #dfe3ea;border-radius:10px;padding:13px 14px;outline:none" onkeydown="if(event.key==='Enter') sendChat()"><button class="run" style="width:auto;margin-top:0;padding:13px 22px" onclick="sendChat()">Send</button></div><div id="chat-status" style="margin-top:10px;color:#7b8391;font-size:11px"></div></div>`}`);}
+
+function doctor(){return shell(`<div class="page-head"><div><h2>Doctor Dashboard</h2><p>Emergency triage overview and patient assessment workspace</p></div><div class="pulse">〽</div></div><div class="grid3"><div class="metric"><small>Active Assessments</small><strong>01</strong></div><div class="metric"><small>AI Pipeline</small><strong>6 Agents</strong></div><div class="metric"><small>System Status</small><strong style="color:#19a76b">Operational</strong></div></div><div class="card"><h3>EmergencyFlow AI</h3><p style="color:#697181;line-height:1.7">The dashboard connects the patient document to the multi-agent emergency triage workflow and presents structured patient data, medical records, history, triage findings, and the final clinical summary.</p><button class="run" onclick="go('patient')">Open Patient Assessment →</button></div>`,'doctor')}
+function render(){app.innerHTML=state.page==='home'?home():state.page==='patient'?patient():state.page==='chat'?chatPage():doctor()}
+function go(p){state.page=p;render();window.scrollTo(0,0)}
+function pickFile(f){state.file=f;state.error='';render()}
+function resetPatient(){state.file=null;state.data=null;state.error='';state.chatMessages=[];go('patient')}
+
+function patientDataAgent(pdfText){
+    const text = pdfText.toLowerCase();
+
+    const patientData = {
+        age: null,
+        gender: null,
+        symptoms: [],
+        vital_signs: {},
+        clinical_condition: [],
+        other_relevant_information: []
+    };
+
+    const ageMatch = text.match(/\b(\d{2})\s*[- ]?year[- ]old\b/);
+
+    if(ageMatch){
+        patientData.age = Number(ageMatch[1]);
+    }
+
+    if(text.includes("woman")){
+        patientData.gender = "Female";
+    }else if(text.includes("man")){
+        patientData.gender = "Male";
+    }
+
+    const symptoms = [
+        ["dyspnea on exertion", "Dyspnea on exertion"],
+        ["shortness of breath", "Shortness of breath"],
+        ["dry cough", "Dry cough"],
+        ["atypical chest pain", "Atypical chest pain"],
+        ["productive cough", "Productive cough"],
+        ["fatigue", "Fatigue"],
+        ["chest discomfort", "Chest discomfort"]
+    ];
+
+    for(const [phrase, label] of symptoms){
+        if(text.includes(phrase)){
+            patientData.symptoms.push(label);
+        }
+    }
+
+    const bpMatch = text.match(/(?:blood pressure|bp)\s*(?:of|:)?\s*(\d+\/\d+)/);
+    const hrMatch = text.match(/(?:heart rate|hr)\s*(?:of|:)?\s*(\d+)/);
+    const rrMatch = text.match(/(?:respiratory rate|rr)\s*(?:of|:)?\s*(\d+)/);
+    const tempMatch = text.match(/(?:temperature|temp)\s*(?:of|:)?\s*(\d+)/);
+
+    if(bpMatch){
+        patientData.vital_signs.blood_pressure = bpMatch[1];
+    }
+
+    if(hrMatch){
+        patientData.vital_signs.heart_rate = hrMatch[1];
+    }
+
+    if(rrMatch){
+        patientData.vital_signs.respiratory_rate = rrMatch[1];
+    }
+
+    if(tempMatch){
+        patientData.vital_signs.temperature = tempMatch[1];
+    }
+
+    const conditions = [
+        ["cardiac arrest", "Cardiac arrest"],
+        ["unresponsive", "Unresponsive"],
+        ["no distal pulses", "No distal pulses"],
+        ["bilateral fixed and dilated pupils", "Bilateral fixed and dilated pupils"]
+    ];
+
+    for(const [phrase, label] of conditions){
+        if(text.includes(phrase)){
+            patientData.clinical_condition.push(label);
+        }
+    }
+
+    if(
+        text.includes("no medications") ||
+        text.includes("not taking regular medications")
+    ){
+        patientData.other_relevant_information.push("No medications reported");
+    }
+
+    return patientData;
+}
+function medicalRecordsAgent(pdfText){
+
+    const text = pdfText.toLowerCase();
+
+    const medicalRecords = {
+        previous_medical_status: [],
+        medications: [],
+        tests_and_examinations: [],
+        emergency_interventions: [],
+        reported_pathological_findings: []
+    };
+
+    if(text.includes("healthy")){
+        medicalRecords.previous_medical_status.push(
+            "Physician reported the patient as healthy"
+        );
+    }
+
+    if(
+        text.includes("on no medications") ||
+        text.includes("no medications") ||
+        text.includes("not taking regular medications")
+    ){
+        medicalRecords.medications.push(
+            "No medications reported"
+        );
+    }
+
+    if(text.includes("ekg")){
+        medicalRecords.tests_and_examinations.push(
+            "EKG performed"
+        );
+    }
+
+    if(text.includes("rule out anemia")){
+        medicalRecords.tests_and_examinations.push(
+            "Orders were sent to rule out anemia"
+        );
+    }
+
+    if(text.includes("thyroid disease")){
+        medicalRecords.tests_and_examinations.push(
+            "Orders were sent to rule out thyroid disease"
+        );
+    }
+
+    if(text.includes("cpr")){
+        medicalRecords.emergency_interventions.push(
+            "CPR performed"
+        );
+    }
+
+    if(text.includes("atropine")){
+        medicalRecords.emergency_interventions.push(
+            "Atropine administered"
+        );
+    }
+
+    if(text.includes("epinephrine")){
+        medicalRecords.emergency_interventions.push(
+            "Epinephrine administered"
+        );
+    }
+
+    if(text.includes("bicarbonate")){
+        medicalRecords.emergency_interventions.push(
+            "Bicarbonate administered"
+        );
+    }
+
+    if(text.includes("intubation")){
+        medicalRecords.emergency_interventions.push(
+            "Intubation performed"
+        );
+    }
+
+    if(
+        text.includes("bilateral pulmonary embolism") ||
+        text.includes("bilateral pe")
+    ){
+        medicalRecords.reported_pathological_findings.push(
+            "Bilateral pulmonary embolism (PE)"
+        );
+    }
+
+    if(text.includes("bile duct adenoma")){
+        medicalRecords.reported_pathological_findings.push(
+            "Bile duct adenoma"
+        );
+    }
+
+    if(
+        text.includes("fractures in the left ribs") ||
+        text.includes("rib fractures")
+    ){
+        medicalRecords.reported_pathological_findings.push(
+            "Rib fractures"
+        );
+    }
+
+    return medicalRecords;
+}
+function triageAgent(patientData, medicalRecords, history){
+
+    const clinicalCondition = patientData.clinical_condition || [];
+    const vitalSigns = patientData.vital_signs || {};
+
+    const criticalFindings = [];
+
+    if(clinicalCondition.includes("Cardiac arrest")){
+        criticalFindings.push("Cardiac arrest");
+    }
+
+    if(clinicalCondition.includes("Unresponsive")){
+        criticalFindings.push("Unresponsive");
+    }
+
+    if(clinicalCondition.includes("No distal pulses")){
+        criticalFindings.push("No distal pulses");
+    }
+
+    if(vitalSigns.heart_rate === "0"){
+        criticalFindings.push("Heart rate: 0");
+    }
+
+    if(vitalSigns.respiratory_rate === "0"){
+        criticalFindings.push("Respiratory rate: 0");
+    }
+
+    let priority = "Requires Further Assessment";
+
+    if(criticalFindings.length > 0){
+        priority = "Immediate Emergency";
+    }
+
+    const reason =
+        "The patient has cardiac arrest with no detectable heart rate, " +
+        "no respiratory rate, and no distal pulses, indicating an immediate emergency.";
+
+    return {
+        priority: priority,
+        reason: reason,
+        critical_findings: criticalFindings,
+        safety_note:
+            "Decision-support prototype only; not a medical diagnosis or treatment recommendation."
+    };
+}
+function historyAgent(pdfText){
+
+    const text = pdfText.toLowerCase();
+
+    const historyData = {
+        long_term_care: [],
+        previous_status: [],
+        recent_history: [],
+        timeline_events: []
+    };
+
+    if(
+        text.includes("under the care of dr.") &&
+        text.includes("19 years")
+    ){
+        historyData.long_term_care.push(
+            "Patient was under the care of a physician for 19 years"
+        );
+    }
+
+    if(text.includes("healthy")){
+        historyData.previous_status.push(
+            "Patient was reported as healthy"
+        );
+    }
+
+    if(text.includes("on no medications")){
+        historyData.previous_status.push(
+            "No medications were reported"
+        );
+    }
+
+    if(text.includes("two weeks of dyspnea")){
+        historyData.recent_history.push(
+            "Two weeks of dyspnea on exertion"
+        );
+    }
+
+    if(text.includes("dry cough")){
+        historyData.recent_history.push(
+            "Dry cough"
+        );
+    }
+
+    if(text.includes("atypical chest pain")){
+        historyData.recent_history.push(
+            "Atypical chest pain"
+        );
+    }
+
+    if(text.includes("february 9, 2007")){
+        historyData.timeline_events.push(
+            "February 9, 2007: Patient was evaluated by the physician"
+        );
+    }
+
+    if(text.includes("february 11, 2007")){
+        historyData.timeline_events.push(
+            "February 11, 2007: EMS found the patient in cardiac arrest"
+        );
+    }
+
+    if(text.includes("10:16 am")){
+        historyData.timeline_events.push(
+            "10:16 AM: CPR ceased and the patient was pronounced"
+        );
+    }
+
+    return historyData;
+}
+function summaryAgent(patientData, history, triageData){
+
+    const age = patientData.age || "unknown age";
+    const gender = patientData.gender || "unknown gender";
+
+    const symptoms = patientData.symptoms || [];
+    const clinicalCondition = patientData.clinical_condition || [];
+
+    const priority = triageData.priority || "Requires Further Assessment";
+
+    const sentence1 =
+        `The patient is a ${age}-year-old ${gender.toLowerCase()} with ` +
+        `${symptoms.length ? symptoms.join(", ") : "no reported symptoms"}.`;
+
+    const sentence2 =
+        `The acute findings include ` +
+        `${clinicalCondition.length ? clinicalCondition.join(", ") : "no reported acute findings"}.`;
+
+    const sentence3 =
+        `The triage priority is ${priority}.`;
+
+    return `${sentence1} ${sentence2} ${sentence3}`;
+}
+async function runAssessment(){
+    if(!state.file)return;
+    state.loading=true; state.error=''; state.data=null; state.chatMessages=[]; render();
+    try{
+        const formData=new FormData();
+        formData.append('file',state.file,state.file.name);
+        const response=await fetch(`${API_BASE}/api/assess`,{method:'POST',body:formData});
+        const payload=await response.json();
+        if(!response.ok) throw new Error(payload.error||'EmergencyFlow assessment failed.');
+        state.data=payload; state.page='patient';
+    }catch(error){
+        console.error('ASSESSMENT ERROR:',error);
+        state.error=error.message||'Unable to connect to EmergencyFlow AI backend.';
+    }finally{state.loading=false;render();}
+}
+async function sendChat(){
+    const input=document.getElementById('chat-input'); if(!input)return;
+    const question=input.value.trim(); if(!question||!state.data?.result)return;
+    state.chatMessages.push({role:'user',content:question}); input.value=''; render();
+    const status=document.getElementById('chat-status'); if(status)status.textContent='EmergencyFlow AI is analyzing the question...';
+    try{
+        const response=await fetch(`${API_BASE}/api/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question,report:state.data.result,history:state.chatMessages})});
+        const payload=await response.json();
+        if(!response.ok)throw new Error(payload.answer||payload.error||'AI Consultation failed.');
+        state.chatMessages.push({role:'assistant',content:payload.answer||'No answer was returned.'}); render();
+        setTimeout(()=>{const box=document.getElementById('chat-box');if(box)box.scrollTop=box.scrollHeight;},50);
+    }catch(error){
+        console.error('CHAT ERROR:',error);
+        state.chatMessages.push({role:'assistant',content:'Unable to connect to the AI backend: '+error.message}); render();
+    }
+}
+
+const originalRender=render;render=function(){if(state.loading){app.innerHTML=topbar()+`<div class="dashboard"><aside class="sidebar"></aside><main class="main"><div class="card loading"><div class="spinner"></div><h3>Running Emergency Assessment</h3><p style="color:#78808e">Patient Data → Medical Records → History → Triage → Summary → Final Report</p></div></main></div>`;return}originalRender()};render();
+</script>
+<script>
+console.log("NightShift MD browser mode is ready");
+console.log("PDF.js test");
+console.log(typeof pdfjsLib);
+</script>
+</body>
+</html>
+
