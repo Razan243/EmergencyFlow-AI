@@ -1,35 +1,66 @@
-# EmergencyFlow AI — NightShift MD
+# 🚨 EmergencyFlow AI — Multi-Agent Emergency Triage System
 
-Custom GitHub Pages frontend for the EmergencyFlow AI multi-agent emergency triage project.
+<p align="center">
+  <img src="Medical.png" alt="EmergencyFlow AI Architecture">
+</p>
 
-## Architecture
+> An AI-powered multi-agent emergency triage and clinical decision-support prototype for analyzing medical reports and generating structured emergency assessment insights.
 
-- GitHub Pages hosts the custom `index.html` website.
-- The existing AI backend exposes `POST /api/assess`, `POST /api/chat`, and `GET /health`.
-- The frontend sends PDF assessment and chat requests to the backend.
+---
 
-## GitHub Pages
+## 📌 Overview
 
-1. Create a repository such as `EmergencyFlow-AI`.
-2. Upload `index.html`, `README.md`, `.gitignore`, and `.nojekyll`.
-3. Open **Settings → Pages**.
-4. Select **Deploy from a branch → main → /(root)**.
-5. Save.
+**EmergencyFlow AI** is a Multi-Agent AI system designed to process medical reports and transform unstructured clinical information into a structured emergency assessment.
 
-The website URL will look like:
+The system accepts a medical report in **PDF format** and processes it through a sequence of specialized agents that extract patient information, medical records, patient history, emergency findings, and an AI-generated clinical summary.
 
-`https://YOUR-USERNAME.github.io/EmergencyFlow-AI/`
+The project demonstrates the practical application of:
 
-## Backend
+- Artificial Intelligence
+- Multi-Agent Systems
+- Natural Language Processing
+- Large Language Models
+- Workflow Orchestration
+- Clinical Information Extraction
+- AI-Assisted Decision Support
 
-The frontend is currently configured to use:
+---
 
-`https://razangewaily-nightshift-md-medicore-ai.hf.space`
+## ✨ Features
 
-The backend must allow CORS requests from the GitHub Pages origin.
+- 📄 Medical PDF report processing
+- 👤 Patient information extraction
+- 📋 Medical records extraction
+- 🕒 Patient history and timeline organization
+- 🚨 Emergency triage assessment
+- 🔎 Critical clinical findings detection
+- 🧠 AI-generated clinical summary
+- 📊 Structured final clinical report
+- ✅ Final report validation
+- 💬 AI Consultation Chat
+- 🌐 Custom web-based interface
+- 🤖 Multi-Agent workflow architecture
+- ⚡ End-to-end automated processing
 
-Do not put API keys or secrets in this repository.
+---
 
-## Purpose
+## 🎯 Project Objective
 
-EmergencyFlow AI is an educational decision-support prototype and is not intended for clinical diagnosis or treatment decisions.
+The main objective of **EmergencyFlow AI** is to demonstrate how multiple AI agents can work together to organize and analyze information from medical reports.
+
+The system follows a sequential workflow:
+
+```text
+Medical PDF
+     ↓
+Patient Data Agent
+     ↓
+Medical Records Agent
+     ↓
+History Agent
+     ↓
+Triage Agent
+     ↓
+Summary Agent
+     ↓
+Final Clinical Report
