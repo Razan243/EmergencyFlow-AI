@@ -412,28 +412,19 @@ The AI backend is deployed separately and exposes the required API endpoints:
 
 ## 🌐 Live Project
 
-### GitHub Repository
+### 🚀 Website
+
+[**EmergencyFlow AI — Live Website**](https://razan243.github.io/EmergencyFlow-AI/)
+
+### 📦 GitHub Repository
 
 https://github.com/Razan243/EmergencyFlow-AI
 
-### GitHub Pages
+### 🤖 AI Backend
 
-https://razan243.github.io/EmergencyFlow-AI/
+The AI processing backend handles PDF analysis, multi-agent execution, report generation, and AI consultation.
 
-> GitHub Pages hosts the frontend interface, while the AI backend handles PDF processing, multi-agent execution, report generation, and AI consultation.
-
----
-
-## 📄 Input
-
-The system accepts medical reports in:
-
-```text
-PDF format
-```
-
-After uploading a report, the system extracts and organizes relevant information into structured sections.
-
+> GitHub Pages hosts the frontend interface, while the AI backend handles the AI processing.
 ---
 
 ## 🔍 Final Report Validation
